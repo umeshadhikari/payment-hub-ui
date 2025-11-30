@@ -68,12 +68,13 @@ export class AppComponent {
           } 
           // Handle wrapped response with message/data/count structure
           else if (response && typeof response === 'object' && 'data' in response) {
-            const data = response.data as { [key: string]: any }[];
-            if (!data || data.length === 0) {
-              this.noDataMessage = (response as { message?: string }).message || 'No data found for this query.';
+            const wrappedResponse = response as { data?: unknown; message?: string };
+            const data = Array.isArray(wrappedResponse.data) ? wrappedResponse.data : [];
+            if (data.length === 0) {
+              this.noDataMessage = wrappedResponse.message || 'No data found for this query.';
               this.responseData = [];
             } else {
-              this.responseData = data;
+              this.responseData = data as { [key: string]: any }[];
             }
           } else {
             this.noDataMessage = 'No data found for this query.';
