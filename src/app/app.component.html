@@ -29,9 +29,14 @@
       {{ errorMessage }}
     </div>
 
+    <!-- No Data State -->
+    <div *ngIf="noDataMessage && !isLoading" class="no-data">
+      {{ noDataMessage }}
+    </div>
+
     <!-- Results State -->
     <!-- FIX: Binds to 'responseData' and 'visualizationType' -->
-    <div *ngIf="responseData && !isLoading" class="results" [ngSwitch]="visualizationType" style="width: 100%;">
+    <div *ngIf="responseData && responseData.length > 0 && !isLoading" class="results" [ngSwitch]="visualizationType" style="width: 100%;">
       
       <!-- Case: Bar Chart -->
       <ngx-charts-bar-vertical

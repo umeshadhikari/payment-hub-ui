@@ -6,8 +6,9 @@ button { padding: 0.75rem 1.5rem; background: #007bff; color: white; border: non
 button:disabled { background: #aaa; }
 /* FIX: Corrected typo align: items -> align-items: center */
 .chart-container { min-height: 300px; padding: 1rem; background: #f9f9f9; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
-.loading, .error { text-align: center; padding: 2rem; font-weight: 500; }
+.loading, .error, .no-data { text-align: center; padding: 2rem; font-weight: 500; }
 .error { color: red; }
+.no-data { color: #666; }
 table { width: 100%; border-collapse: collapse; }
 th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 th { background-color: #f2f2f2; }
