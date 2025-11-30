@@ -41,3 +41,22 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+
+# OS generated files
+*.pid
+*.seed
+*.pid.lock
