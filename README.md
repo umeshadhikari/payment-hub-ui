@@ -1,59 +1,92 @@
-# PaymentHubUi
+# Payment Hub UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
+A modern Angular web application for querying treasury payment data using natural language. This application provides an intuitive interface to ask questions about payment information and view results in a table format.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Natural Language Query Interface**: Ask questions about treasury payments in plain English
+- **Data Visualization**: View query results in a clean, responsive table format
+- **Modern Angular 20**: Built with Angular's latest standalone component architecture
+- **Responsive Design**: Works seamlessly across desktop and mobile devices
 
-```bash
-ng serve
-```
+## Prerequisites
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Node.js (v18 or higher recommended)
+- npm (v9 or higher)
+- Angular CLI (`npm install -g @angular/cli`)
 
-## Code scaffolding
+## Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Installation
 
 ```bash
-ng generate --help
+# Install dependencies
+npm install
 ```
 
-## Building
-
-To build the project run:
+### Development Server
 
 ```bash
-ng build
+# Start the development server
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Navigate to `http://localhost:4200/`. The application will automatically reload when you make changes to source files.
 
-## Running unit tests
+### Backend Configuration
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+This application connects to a backend API at `http://localhost:8080/api/nlq` for processing natural language queries. Ensure the backend service is running before using the query functionality.
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start the development server |
+| `npm run build` | Build the application for production |
+| `npm run watch` | Build in watch mode for development |
+| `npm test` | Run unit tests with Karma |
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── app.ts              # Main application component
+│   ├── app.html            # Application template
+│   ├── app.css             # Component styles
+│   ├── app.config.ts       # Application configuration
+│   ├── app.spec.ts         # Unit tests
+│   └── nlq-api.service.ts  # API service for NLQ backend
+├── main.ts                 # Application bootstrap
+├── index.html              # Main HTML file
+└── styles.css              # Global styles
+```
+
+## Technology Stack
+
+- **Framework**: Angular 20
+- **Language**: TypeScript 5.9
+- **Testing**: Jasmine + Karma
+- **HTTP Client**: Angular HttpClient
+
+## Building for Production
 
 ```bash
-ng test
+npm run build
 ```
 
-## Running end-to-end tests
+The build artifacts are stored in the `dist/payment-hub-ui` directory. The production build optimizes the application for performance and speed.
 
-For end-to-end (e2e) testing, run:
+## Running Tests
 
 ```bash
-ng e2e
+# Run unit tests
+npm test
+
+# Run tests with headless Chrome (CI environments)
+npm test -- --browsers=ChromeHeadless --watch=false
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## License
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is private and proprietary.
