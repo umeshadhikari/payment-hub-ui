@@ -1,0 +1,77 @@
+<div class="container">
+  <h1>Payment Hub NLQ</h1>
+  <p>Ask a question about your payment data, and the AI agent will call the correct API to get an answer.</p>
+
+  <!-- Query Input Form -->
+  <!-- FIX: Binds to 'onSubmit' and 'query' -->
+  <form (ngSubmit)="onSubmit()">
+    <input
+      type="text"
+      [(ngModel)]="query"
+      name="query"
+      placeholder="e.g., 'What is the payment breakdown by currency?'"
+    />
+    <button type="submit" [disabled]="isLoading">
+      {{ isLoading ? 'Thinking...' : 'Ask' }}
+    </button>
+  </form>
+
+  <!-- Visualization Area -->
+  <div class="chart-container">
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading">
+      Agent is processing...
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Results State -->
+    <!-- FIX: Binds to 'responseData' and 'visualizationType' -->
+    <div *ngIf="responseData && !isLoading" class="results" [ngSwitch]="visualizationType" style="width: 100%;">
+      
+      <!-- Case: Bar Chart -->
+      <ngx-charts-bar-vertical
+        *ngSwitchCase="'bar'"
+        [view]="view"
+        [results]="responseData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [legend]="false">
+      </ngx-charts-bar-vertical>
+
+      <!-- Case: Line Chart -->
+      <ngx-charts-line-chart
+        *ngSwitchCase="'line'"
+        [view]="view"
+        [results]="responseData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [legend]="true">
+      </ngx-charts-line-chart> <!-- FIX: Corrected <NT-CHART> typo -->
+
+      <!-- Case: Table (Default) -->
+      <!-- FIX: Binds to 'tableHeaders' and 'responseData' -->
+      <table *ngSwitchDefault>
+        <thead>
+          <tr>
+            <th *ngFor="let header of tableHeaders">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of responseData">
+            <td *ngFor="let header of tableHeaders">{{ row[header] }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
