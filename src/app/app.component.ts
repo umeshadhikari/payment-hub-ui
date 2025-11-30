@@ -30,6 +30,7 @@ export class AppComponent {
   query: string = 'Show me the payment breakdown by currency';
   isLoading: boolean = false;
   errorMessage: string | null = null;
+  noDataMessage: string | null = null;
   
   // Properties for the data response
   responseData: { [key: string]: any }[] | null = null;
@@ -49,6 +50,7 @@ export class AppComponent {
 
     this.isLoading = true;
     this.errorMessage = null;
+    this.noDataMessage = null;
     this.responseData = null;
     this.visualizationType = null;
     this.tableHeaders = []; 
@@ -56,9 +58,32 @@ export class AppComponent {
     this.nlqApi.askQuery(this.query)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
-        next: (data) => {
-          this.responseData = data as { [key: string]: any }[];
-          this.determineVisualization(this.responseData);
+        next: (response) => {
+          // Handle direct array response first (arrays are also objects in JS)
+          if (Array.isArray(response)) {
+            this.responseData = response as { [key: string]: any }[];
+            if (this.responseData.length === 0) {
+              this.noDataMessage = 'No data found for this query.';
+            }
+          } 
+          // Handle wrapped response with message/data/count structure
+          else if (response && typeof response === 'object' && 'data' in response) {
+            const data = response.data as { [key: string]: any }[];
+            if (!data || data.length === 0) {
+              this.noDataMessage = (response as { message?: string }).message || 'No data found for this query.';
+              this.responseData = [];
+            } else {
+              this.responseData = data;
+            }
+          } else {
+            this.noDataMessage = 'No data found for this query.';
+            this.responseData = [];
+          }
+          
+          // Only determine visualization if we have data
+          if (this.responseData && this.responseData.length > 0) {
+            this.determineVisualization(this.responseData);
+          }
         },
         error: (err) => {
           this.errorMessage = err.message;
